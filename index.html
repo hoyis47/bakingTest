@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제빵기능사 실기 암기 시험지</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .select-area {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .bread-select { width: 60%; }
+        .mixing-select { width: 100%; max-width: 300px; }
+        
+        /* 공부용 메모/비고 상자 스타일 */
+        .memo-box {
+            background-color: #fff9db;
+            border: 1px dashed #f59f00;
+            border-radius: 6px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d9480f;
+        }
+        .memo-title {
+            font-weight: bold;
+        }
+
+        /* 개별 문제 카드 스타일 */
+        .question-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+        
+        /* 입력창 스타일 */
+        input[type="number"] {
+            padding: 8px 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .input-short { width: 70px; text-align: center; }
+        
+        /* 채점 결과 스타일 */
+        .feedback {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct-card { border-left: 5px solid #27ae60; background-color: #f1f9f5; }
+        .wrong-card { border-left: 5px solid #c0392b; background-color: #fdf2f2; }
+        .correct-text { color: #27ae60; }
+        .wrong-text { color: #c0392b; }
+        
+        /* 하단 결과 및 버튼 */
+        .action-zone {
+            margin-top: 25px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+            text-align: center;
+        }
+        
+        /* 버튼 공통 및 테마색 분리 */
+        button {
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+            margin: 5px;
+        }
+        .btn-green { background-color: #4CAF50; }
+        .btn-green:hover { background-color: #45a049; }
+        .btn-orange { background-color: #f39c12; }
+        .btn-orange:hover { background-color: #d35400; }
+        .btn-blue { background-color: #3498db; }
+        .btn-blue:hover { background-color: #2980b9; }
+        
+        .final-result {
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            display: none;
+        }
+        .sub-btn-group {
+            margin-top: 15px;
+            display: none; /* 초기 숨김, 채점 후 오픈 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>📝 제빵기능사 실기 모의고사</h1>
+    
+    <div class="select-area" id="select-zone">
+        <label for="bread-selector"><b>학습할 품목 선택:</b> </label>
+        <select id="bread-selector" class="bread-select" onchange="startQuizBySelection()">
+            <option value="">-- 품목을 선택하세요 --</option>
+        </select>
+    </div>
+
+    <div id="quiz-zone" style="display: none;">
+        <h2 id="current-bread-title" style="color:#27ae60; font-size: 20px; margin: 0 0 15px 0;"></h2>
+        
+        <div id="memo-area"></div>
+        
+        <div id="paper-area"></div>
+        
+        <div class="action-zone">
+            <button onclick="gradeExam()" id="submit-btn" class="btn-green">시험지 채점하기</button>
+            <div class="final-result" id="final-score">최종 점수: 0 / 0</div>
+            
+            <div class="sub-btn-group" id="extra-buttons">
+                <button onclick="resetCurrentExam()" class="btn-orange">🔄 다시 풀기 (내용 비우기)</button>
+                <button onclick="nextBreadExam()" class="btn-blue">➡️ 다음 품목 시험 보기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="bakeData.js"></script>
+
+<script>
+let questions = [];
+const mixingStages = ["픽업단계", "클린업단계", "발전단계", "최종단계", "최종단계후기", "렛다운단계", "브레이크단계"];
+
+window.onload = function() {
+    initSelector();
+};
+
+function initSelector() {
+    const selector = document.getElementById("bread-selector");
+    selector.innerHTML = `<option value="">-- 품목을 선택하세요 --</option>`;
+    bakeryListData.forEach((item, index) => {
+        selector.innerHTML += `<option value="${index}">${item.name}</option>`;
+    });
+}
+
+function startQuizBySelection() {
+    const selector = document.getElementById("bread-selector");
+    const selectedIdx = selector.value;
+    
+    if (selectedIdx === "") {
+        document.getElementById("quiz-zone").style.display = "none";
+        return;
+    }
+
+    const selectedData = bakeryListData[selectedIdx];
+    
+    // 메모 영역 세팅
+    const memoArea = document.getElementById("memo-area");
+    if (selectedData.memo && selectedData.memo.trim() !== "") {
+        memoArea.innerHTML = `
+            <div class="memo-box">
+                <div class="memo-title">💡 학습 참고 사항 (제조 공정 및 특이사항)</div>
+                <div>${selectedData.memo}</div>
+            </div>
+        `;
+    } else {
+        memoArea.innerHTML = "";
+    }
+
+    questions = parseJsonToQuestions(selectedData);
+    
+    document.getElementById("current-bread-title").innerText = `🎯 품목: ${selectedData.name}`;
+    document.getElementById("final-score").style.display = "none";
+    document.getElementById("extra-buttons").style.display = "none"; // 새 품목 로드 시 서브 버튼 숨김
+    document.getElementById("submit-btn").style.display = "inline-block";
+    
+    buildExamPaper();
+    document.getElementById("quiz-zone").style.display = "block";
+}
+
+function parseJsonToQuestions(data) {
+    const qList = [];
+    if (data.mixing) qList.push({ text: `1. 믹싱 단계를 선택하세요.`, type: "select", answer: data.mixing });
+    if (data.firstFermentation?.time) qList.push({ text: `2. 1차 발효 시간(분)을 입력하세요.`, type: "range", min: data.firstFermentation.time.min, max: data.firstFermentation.time.max });
+    if (data.intermediateProof?.time) qList.push({ text: `3. 중간 발효 시간(분)을 입력하세요.`, type: "range", min: data.intermediateProof.time.min, max: data.intermediateProof.time.max });
+    if (data.secondFermentation?.time) qList.push({ text: `4. 2차 발효 시간(분)을 입력하세요.`, type: "range", min: data.secondFermentation.time.min, max: data.secondFermentation.time.max });
+    if (data.bake) {
+        if (data.bake.topHeat && data.bake.bottomHeat) qList.push({ text: `5. 굽기 오븐 온도를 입력하세요.`, type: "bakeHeat", top: data.bake.topHeat, bottom: data.bake.bottomHeat });
+        if (data.bake.time) qList.push({ text: `6. 굽기 시간(분)을 입력하세요.`, type: "range", min: data.bake.time.min, max: data.bake.time.max });
+    }
+    return qList;
+}
+
+function buildExamPaper() {
+    const paperArea = document.getElementById("paper-area");
+    paperArea.innerHTML = ""; 
+
+    questions.forEach((q, idx) => {
+        let inputHtml = "";
+
+        if (q.type === "select") {
+            inputHtml = `<select id="input-${idx}" class="mixing-select">`;
+            inputHtml += `<option value="">-- 단계를 선택하세요 --</option>`;
+            mixingStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
+            inputHtml += `</select>`;
+        } else if (q.type === "range") {
+            if (q.min === q.max) {
+                inputHtml = `<input type="number" id="input-${idx}-single" class="input-short"> 분`;
+            } else {
+                inputHtml = `
+                    <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
+                    <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
+                `;
+            }
+        } else if (q.type === "bakeHeat") {
+            inputHtml = `
+                윗불: <input type="number" id="input-${idx}-top" class="input-short"> ℃ / 
+                밑불: <input type="number" id="input-${idx}-bottom" class="input-short"> ℃
+            `;
+        }
+
+        paperArea.innerHTML += `
+            <div class="question-card" id="card-${idx}">
+                <div class="question-text">${q.text}</div>
+                <div>${inputHtml}</div>
+                <div class="feedback" id="feedback-${idx}"></div>
+            </div>
+        `;
+    });
+}
+
+function gradeExam() {
+    let finalScore = 0;
+
+    questions.forEach((q, idx) => {
+        const card = document.getElementById(`card-${idx}`);
+        const feedback = document.getElementById(`feedback-${idx}`);
+        let isCorrect = false;
+        let correctMessage = "";
+
+        if (q.type === "select") {
+            const userAns = document.getElementById(`input-${idx}`).value;
+            isCorrect = (userAns === q.answer);
+            correctMessage = `정답: ${q.answer}`;
+        } else if (q.type === "range") {
+            if (q.min === q.max) {
+                const userAns = parseInt(document.getElementById(`input-${idx}-single`).value);
+                isCorrect = (userAns === q.min);
+                correctMessage = `정답: ${q.min}분`;
+            } else {
+                const userMin = parseInt(document.getElementById(`input-${idx}-min`).value);
+                const userMax = parseInt(document.getElementById(`input-${idx}-max`).value);
+                isCorrect = (userMin === q.min && userMax === q.max);
+                correctMessage = `정답: ${q.min} ~ ${q.max}분`;
+            }
+        } else if (q.type === "bakeHeat") {
+            const userTop = parseInt(document.getElementById(`input-${idx}-top`).value);
+            const userBottom = parseInt(document.getElementById(`input-${idx}-bottom`).value);
+            isCorrect = (userTop === q.top && userBottom === q.bottom);
+            correctMessage = `정답: 윗불 ${q.top}℃ / 밑불 ${q.bottom}℃`;
+        }
+
+        feedback.style.display = "block";
+        if (isCorrect) {
+            card.className = "question-card correct-card";
+            feedback.className = "feedback correct-text";
+            feedback.innerText = "⭕ 정답입니다!";
+            finalScore++;
+        } else {
+            card.className = "question-card wrong-card";
+            feedback.className = "feedback wrong-text";
+            feedback.innerText = `❌ 오답입니다. (${correctMessage})`;
+        }
+    });
+
+    const finalScoreDiv = document.getElementById("final-score");
+    finalScoreDiv.style.display = "block";
+    finalScoreDiv.innerText = `💯 점수: ${finalScore} / ${questions.length}`;
+    
+    // 💡 채점이 끝나면 추가 액션 버튼 그룹 노출
+    document.getElementById("extra-buttons").style.display = "block";
+    document.getElementById("submit-btn").style.display = "none"; // 채점 후 제출버튼 잠시 숨김
+}
+
+// 💡 1. 현재 품목 다시 풀기 (값 초기화 및 UI 리셋)
+function resetCurrentExam() {
+    // 입력창들의 기존 값 모두 비우기
+    questions.forEach((q, idx) => {
+        const card = document.getElementById(`card-${idx}`);
+        const feedback = document.getElementById(`feedback-${idx}`);
+        
+        // 카드 및 피드백 상태 리셋
+        card.className = "question-card";
+        feedback.style.display = "none";
+        feedback.innerText = "";
+
+        if (q.type === "select") {
+            document.getElementById(`input-${idx}`).value = "";
+        } else if (q.type === "range") {
+            if (q.min === q.max) {
+                document.getElementById(`input-${idx}-single`).value = "";
+            } else {
+                document.getElementById(`input-${idx}-min`).value = "";
+                document.getElementById(`input-${idx}-max`).value = "";
+            }
+        } else if (q.type === "bakeHeat") {
+            document.getElementById(`input-${idx}-top`).value = "";
+            document.getElementById(`input-${idx}-bottom`).value = "";
+        }
+    });
+
+    // 점수판 및 버튼 가시성 원상복구
+    document.getElementById("final-score").style.display = "none";
+    document.getElementById("extra-buttons").style.display = "none";
+    document.getElementById("submit-btn").style.display = "inline-block";
+}
+
+// 💡 2. 다음 품목 시험 보기 (순차 이동)
+function nextBreadExam() {
+    const selector = document.getElementById("bread-selector");
+    let currentIdx = parseInt(selector.value);
+    
+    // 다음 인덱스 계산 (배열의 끝에 도달하면 다시 0번 인덱스로 환원)
+    let nextIdx = currentIdx + 1;
+    if (nextIdx >= bakeryListData.length) {
+        nextIdx = 0;
+    }
+
+    // 셀렉트 박스 값을 변경하고 트리거 작동
+    selector.value = nextIdx;
+    startQuizBySelection();
+}
+</script>
+
+</body>
+</html>
