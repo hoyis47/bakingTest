@@ -97,7 +97,14 @@
             margin-bottom: 12px;
         }
         
-        /* 입력창 스타일 */
+        /* 💡 입력창 기본 정렬 (PC/태블릿 버전: 가로 배치 보장) */
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        
         input[type="number"] {
             padding: 8px 12px;
             font-size: 15px;
@@ -108,11 +115,15 @@
         .input-short { width: 70px; text-align: center; }
         .input-class-time { width: 65px; text-align: center; border: 1px solid #9b59b6; background-color: #faf0ff; }
         
+        /* 수업 시간 라벨 기본 스타일 (PC/태블릿에서는 한 줄 우측 배치) */
         .class-label {
             color: #8e44ad;
             font-weight: bold;
-            margin-left: 15px;
+            margin-left: 10px;
             font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* 채점 결과 스타일 */
@@ -163,6 +174,22 @@
             display: none;
         }
         .sub-btn-group { margin-top: 15px; display: none; }
+
+        /* 💡 스마트폰 전용 반응형 미디어 쿼리 (화면 폭이 500px 이하일 때) */
+        @media (max-width: 500px) {
+            .quiz-container { padding: 15px; }
+            .bread-select { width: 100%; margin-top: 5px; }
+            
+            /* 모바일에서 수업 입력창을 한 줄 아래로 강제 줄바꿈 및 간격 확보 */
+            .class-label {
+                display: flex;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 8px; 
+                padding-top: 8px;
+                border-top: 1px dashed #e8dbf0; /* 미세한 구분선 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -245,7 +272,7 @@ function startQuizBySelection() {
         memoArea.innerHTML = "";
     }
 
-    // 2. 근거 자료 이미지 틀 생성 (💡 타이틀 레이블을 '수업 자료'로 간결하게 수정)
+    // 2. 근거 자료 이미지 틀 생성
     const evidenceArea = document.getElementById("evidence-area");
     if (selectedData.proofImage && selectedData.proofImage.trim() !== "") {
         evidenceArea.innerHTML = `
@@ -315,12 +342,14 @@ function buildExamPaper() {
             heightStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
             inputHtml += `</select>`;
         } else if (q.type === "range") {
+            // 💡 반응형 구조 정렬을 위해 input-row 래퍼 클래스를 씌워줍니다.
             if (q.min === q.max) {
-                inputHtml = `<input type="number" id="input-${idx}-single" class="input-short"> 분`;
+                inputHtml = `<div class="input-row"><input type="number" id="input-${idx}-single" class="input-short"> 분</div>`;
             } else {
                 inputHtml = `
-                    <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
-                    <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
+                    <div class="input-row">
+                        <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
+                        <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
                 `;
                 if (q.classTime) {
                     inputHtml += `
@@ -329,11 +358,14 @@ function buildExamPaper() {
                         </span>
                     `;
                 }
+                inputHtml += `</div>`;
             }
         } else if (q.type === "bakeHeat") {
             inputHtml = `
-                윗불: <input type="number" id="input-${idx}-top" class="input-short"> ℃ / 
-                밑불: <input type="number" id="input-${idx}-bottom" class="input-short"> ℃
+                <div class="input-row">
+                    윗불: <input type="number" id="input-${idx}-top" class="input-short"> ℃ / 
+                    밑불: <input type="number" id="input-${idx}-bottom" class="input-short"> ℃
+                </div>
             `;
         }
 
