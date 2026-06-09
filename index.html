@@ -41,7 +41,7 @@
             border: 1px solid #ccc;
         }
         .bread-select { width: 60%; }
-        .mixing-select { width: 100%; max-width: 300px; }
+        .mixing-select, .height-select { width: 100%; max-width: 300px; }
         
         /* 공부용 메모/비고 상자 스타일 */
         .memo-box {
@@ -49,13 +49,36 @@
             border: 1px dashed #f59f00;
             border-radius: 6px;
             padding: 15px 20px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             font-size: 15px;
             line-height: 1.6;
             color: #d9480f;
         }
-        .memo-title {
+        .memo-title { font-weight: bold; }
+
+        /* 수업 근거 자료 이미지 상자 스타일 */
+        .evidence-box {
+            background-color: #f0f3f4;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            display: none; 
+        }
+        .evidence-title {
             font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-align: left;
+        }
+        .evidence-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
         }
 
         /* 개별 문제 카드 스타일 */
@@ -83,7 +106,15 @@
             box-sizing: border-box;
         }
         .input-short { width: 70px; text-align: center; }
+        .input-class-time { width: 65px; text-align: center; border: 1px solid #9b59b6; background-color: #faf0ff; }
         
+        .class-label {
+            color: #8e44ad;
+            font-weight: bold;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+
         /* 채점 결과 스타일 */
         .feedback {
             margin-top: 10px;
@@ -104,7 +135,6 @@
             text-align: center;
         }
         
-        /* 버튼 공통 및 테마색 분리 */
         button {
             color: white;
             padding: 12px 24px;
@@ -122,6 +152,8 @@
         .btn-orange:hover { background-color: #d35400; }
         .btn-blue { background-color: #3498db; }
         .btn-blue:hover { background-color: #2980b9; }
+        .btn-gray { background-color: #7f8c8d; }
+        .btn-gray:hover { background-color: #95a5a6; }
         
         .final-result {
             margin-top: 15px;
@@ -130,10 +162,7 @@
             color: #2c3e50;
             display: none;
         }
-        .sub-btn-group {
-            margin-top: 15px;
-            display: none; /* 초기 숨김, 채점 후 오픈 */
-        }
+        .sub-btn-group { margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
@@ -152,11 +181,17 @@
         <h2 id="current-bread-title" style="color:#27ae60; font-size: 20px; margin: 0 0 15px 0;"></h2>
         
         <div id="memo-area"></div>
+
+        <div id="evidence-area"></div>
         
         <div id="paper-area"></div>
         
         <div class="action-zone">
-            <button onclick="gradeExam()" id="submit-btn" class="btn-green">시험지 채점하기</button>
+            <div id="main-buttons">
+                <button onclick="gradeExam()" id="submit-btn" class="btn-green">시험지 채점하기</button>
+                <button onclick="nextBreadExam()" class="btn-gray">👉 다음 품목 바로보기</button>
+            </div>
+            
             <div class="final-result" id="final-score">최종 점수: 0 / 0</div>
             
             <div class="sub-btn-group" id="extra-buttons">
@@ -172,6 +207,7 @@
 <script>
 let questions = [];
 const mixingStages = ["픽업단계", "클린업단계", "발전단계", "최종단계", "최종단계후기", "렛다운단계", "브레이크단계"];
+const heightStages = ["팬높이", "팬높이 아래 5cm", "팬높이 아래 10cm"];
 
 window.onload = function() {
     initSelector();
@@ -196,7 +232,7 @@ function startQuizBySelection() {
 
     const selectedData = bakeryListData[selectedIdx];
     
-    // 메모 영역 세팅
+    // 1. 메모 영역 세팅
     const memoArea = document.getElementById("memo-area");
     if (selectedData.memo && selectedData.memo.trim() !== "") {
         memoArea.innerHTML = `
@@ -209,12 +245,25 @@ function startQuizBySelection() {
         memoArea.innerHTML = "";
     }
 
+    // 2. 근거 자료 이미지 틀 생성 (💡 타이틀 레이블을 '수업 자료'로 간결하게 수정)
+    const evidenceArea = document.getElementById("evidence-area");
+    if (selectedData.proofImage && selectedData.proofImage.trim() !== "") {
+        evidenceArea.innerHTML = `
+            <div class="evidence-box" id="evidence-box-id">
+                <div class="evidence-title">📄 수업 자료</div>
+                <img src="${selectedData.proofImage}" alt="수업 자료" class="evidence-img">
+            </div>
+        `;
+    } else {
+        evidenceArea.innerHTML = "";
+    }
+
     questions = parseJsonToQuestions(selectedData);
     
     document.getElementById("current-bread-title").innerText = `🎯 품목: ${selectedData.name}`;
     document.getElementById("final-score").style.display = "none";
-    document.getElementById("extra-buttons").style.display = "none"; // 새 품목 로드 시 서브 버튼 숨김
-    document.getElementById("submit-btn").style.display = "inline-block";
+    document.getElementById("extra-buttons").style.display = "none";
+    document.getElementById("main-buttons").style.display = "block";
     
     buildExamPaper();
     document.getElementById("quiz-zone").style.display = "block";
@@ -222,13 +271,30 @@ function startQuizBySelection() {
 
 function parseJsonToQuestions(data) {
     const qList = [];
-    if (data.mixing) qList.push({ text: `1. 믹싱 단계를 선택하세요.`, type: "select", answer: data.mixing });
-    if (data.firstFermentation?.time) qList.push({ text: `2. 1차 발효 시간(분)을 입력하세요.`, type: "range", min: data.firstFermentation.time.min, max: data.firstFermentation.time.max });
-    if (data.intermediateProof?.time) qList.push({ text: `3. 중간 발효 시간(분)을 입력하세요.`, type: "range", min: data.intermediateProof.time.min, max: data.intermediateProof.time.max });
-    if (data.secondFermentation?.time) qList.push({ text: `4. 2차 발효 시간(분)을 입력하세요.`, type: "range", min: data.secondFermentation.time.min, max: data.secondFermentation.time.max });
+    let qNum = 1;
+
+    if (data.mixing) {
+        qList.push({ text: `${qNum++}. 믹싱 단계를 선택하세요.`, type: "select-mixing", answer: data.mixing });
+    }
+    if (data.firstFermentation?.time) {
+        qList.push({ text: `${qNum++}. 1차 발효 시간(분)을 입력하세요.`, type: "range", min: data.firstFermentation.time.min, max: data.firstFermentation.time.max, classTime: data.firstFermentation.time.classTime });
+    }
+    if (data.intermediateProof?.time) {
+        qList.push({ text: `${qNum++}. 중간 발효 시간(분)을 입력하세요.`, type: "range", min: data.intermediateProof.time.min, max: data.intermediateProof.time.max, classTime: data.intermediateProof.time.classTime });
+    }
+    if (data.secondFermentation?.time) {
+        qList.push({ text: `${qNum++}. 2차 발효 시간(분)을 입력하세요.`, type: "range", min: data.secondFermentation.time.min, max: data.secondFermentation.time.max, classTime: data.secondFermentation.time.classTime });
+    }
+    if (data.secondFermentationHeight && data.secondFermentationHeight.trim() !== "") {
+        qList.push({ text: `${qNum++}. 2차 발효 완료 시점의 알맞은 팬 높이 기준을 선택하세요.`, type: "select-height", answer: data.secondFermentationHeight });
+    }
     if (data.bake) {
-        if (data.bake.topHeat && data.bake.bottomHeat) qList.push({ text: `5. 굽기 오븐 온도를 입력하세요.`, type: "bakeHeat", top: data.bake.topHeat, bottom: data.bake.bottomHeat });
-        if (data.bake.time) qList.push({ text: `6. 굽기 시간(분)을 입력하세요.`, type: "range", min: data.bake.time.min, max: data.bake.time.max });
+        if (data.bake.topHeat && data.bake.bottomHeat) {
+            qList.push({ text: `${qNum++}. 굽기 오븐 온도를 입력하세요.`, type: "bakeHeat", top: data.bake.topHeat, bottom: data.bake.bottomHeat });
+        }
+        if (data.bake.time) {
+            qList.push({ text: `${qNum++}. 굽기 시간(분)을 입력하세요.`, type: "range", min: data.bake.time.min, max: data.bake.time.max, classTime: data.bake.time.classTime });
+        }
     }
     return qList;
 }
@@ -240,10 +306,13 @@ function buildExamPaper() {
     questions.forEach((q, idx) => {
         let inputHtml = "";
 
-        if (q.type === "select") {
-            inputHtml = `<select id="input-${idx}" class="mixing-select">`;
-            inputHtml += `<option value="">-- 단계를 선택하세요 --</option>`;
+        if (q.type === "select-mixing") {
+            inputHtml = `<select id="input-${idx}" class="mixing-select"><option value="">-- 단계를 선택하세요 --</option>`;
             mixingStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
+            inputHtml += `</select>`;
+        } else if (q.type === "select-height") {
+            inputHtml = `<select id="input-${idx}" class="height-select"><option value="">-- 높이 기준을 선택하세요 --</option>`;
+            heightStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
             inputHtml += `</select>`;
         } else if (q.type === "range") {
             if (q.min === q.max) {
@@ -253,6 +322,13 @@ function buildExamPaper() {
                     <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
                     <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
                 `;
+                if (q.classTime) {
+                    inputHtml += `
+                        <span class="class-label">🍇 수업: 
+                            <input type="number" id="input-${idx}-class" class="input-class-time"> 분
+                        </span>
+                    `;
+                }
             }
         } else if (q.type === "bakeHeat") {
             inputHtml = `
@@ -280,7 +356,7 @@ function gradeExam() {
         let isCorrect = false;
         let correctMessage = "";
 
-        if (q.type === "select") {
+        if (q.type === "select-mixing" || q.type === "select-height") {
             const userAns = document.getElementById(`input-${idx}`).value;
             isCorrect = (userAns === q.answer);
             correctMessage = `정답: ${q.answer}`;
@@ -292,8 +368,17 @@ function gradeExam() {
             } else {
                 const userMin = parseInt(document.getElementById(`input-${idx}-min`).value);
                 const userMax = parseInt(document.getElementById(`input-${idx}-max`).value);
-                isCorrect = (userMin === q.min && userMax === q.max);
+                
+                let rangeCheck = (userMin === q.min && userMax === q.max);
                 correctMessage = `정답: ${q.min} ~ ${q.max}분`;
+                
+                if (q.classTime) {
+                    const userClass = parseInt(document.getElementById(`input-${idx}-class`).value);
+                    isCorrect = (rangeCheck && userClass === q.classTime);
+                    correctMessage += ` / 수업 실습: ${q.classTime}분`;
+                } else {
+                    isCorrect = rangeCheck;
+                }
             }
         } else if (q.type === "bakeHeat") {
             const userTop = parseInt(document.getElementById(`input-${idx}-top`).value);
@@ -319,24 +404,25 @@ function gradeExam() {
     finalScoreDiv.style.display = "block";
     finalScoreDiv.innerText = `💯 점수: ${finalScore} / ${questions.length}`;
     
-    // 💡 채점이 끝나면 추가 액션 버튼 그룹 노출
+    const evidenceBox = document.getElementById("evidence-box-id");
+    if (evidenceBox) {
+        evidenceBox.style.display = "block";
+    }
+
+    document.getElementById("main-buttons").style.display = "none";
     document.getElementById("extra-buttons").style.display = "block";
-    document.getElementById("submit-btn").style.display = "none"; // 채점 후 제출버튼 잠시 숨김
 }
 
-// 💡 1. 현재 품목 다시 풀기 (값 초기화 및 UI 리셋)
 function resetCurrentExam() {
-    // 입력창들의 기존 값 모두 비우기
     questions.forEach((q, idx) => {
         const card = document.getElementById(`card-${idx}`);
         const feedback = document.getElementById(`feedback-${idx}`);
         
-        // 카드 및 피드백 상태 리셋
         card.className = "question-card";
         feedback.style.display = "none";
         feedback.innerText = "";
 
-        if (q.type === "select") {
+        if (q.type === "select-mixing" || q.type === "select-height") {
             document.getElementById(`input-${idx}`).value = "";
         } else if (q.type === "range") {
             if (q.min === q.max) {
@@ -344,6 +430,9 @@ function resetCurrentExam() {
             } else {
                 document.getElementById(`input-${idx}-min`).value = "";
                 document.getElementById(`input-${idx}-max`).value = "";
+                if (q.classTime) {
+                    document.getElementById(`input-${idx}-class`).value = "";
+                }
             }
         } else if (q.type === "bakeHeat") {
             document.getElementById(`input-${idx}-top`).value = "";
@@ -351,24 +440,26 @@ function resetCurrentExam() {
         }
     });
 
-    // 점수판 및 버튼 가시성 원상복구
+    const evidenceBox = document.getElementById("evidence-box-id");
+    if (evidenceBox) {
+        evidenceBox.style.display = "none";
+    }
+
     document.getElementById("final-score").style.display = "none";
     document.getElementById("extra-buttons").style.display = "none";
-    document.getElementById("submit-btn").style.display = "inline-block";
+    document.getElementById("main-buttons").style.display = "block";
 }
 
-// 💡 2. 다음 품목 시험 보기 (순차 이동)
 function nextBreadExam() {
     const selector = document.getElementById("bread-selector");
     let currentIdx = parseInt(selector.value);
     
-    // 다음 인덱스 계산 (배열의 끝에 도달하면 다시 0번 인덱스로 환원)
+    if (isNaN(currentIdx)) currentIdx = -1;
+
     let nextIdx = currentIdx + 1;
     if (nextIdx >= bakeryListData.length) {
         nextIdx = 0;
     }
-
-    // 셀렉트 박스 값을 변경하고 트리거 작동
     selector.value = nextIdx;
     startQuizBySelection();
 }
