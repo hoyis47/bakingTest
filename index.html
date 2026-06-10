@@ -583,14 +583,14 @@ function buildExamPaper(midProofText, selectedData) {
         }	
 
 		// 2. 추가 작업 표시 (2차 발효 질문 직후에 삽입)
-        if (selectedData.extraProcess && q.text.includes("2차 발효")) {
+        if (selectedData.extraProcess && q.text.includes("2차 발효 시간") && currentMode === "study") {
             paperArea.innerHTML += `
                 <div class="mid-proof-info">
                     <span class="mid-proof-title">✂️ 추가 작업:</span>
                     <span class="mid-proof-value">${selectedData.extraProcess}</span>
                 </div>
             `;
-        }		
+        }	
     });	
 	
 }
