@@ -74,6 +74,7 @@ const bakeryListData = [
     "firstFermentation": { "time": { "min": 40, "max": 40 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
     "secondFermentation": { "time": { "min": 30, "max": 30 } },
+	"extraProcess": "반죽 표면을 말린 후 칼집을 낸다. <br>옆면까지 물을 분무한다",
     "bake": {
       "topHeat": 185,
       "bottomHeat": 160,
@@ -90,7 +91,7 @@ const bakeryListData = [
     "mixing": "발전단계",
     "firstFermentation": { "time": { "min": 50, "max": 50 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
-    "secondFermentation": { "time": { "min": 40, "max": 45, "classTime": 40 } },
+    "secondFermentation": { "time": { "min": 40, "max": 45, "classTime": 40 } },	
     "bake": {
       "topHeat": 200,
       "bottomHeat": 150,
@@ -109,6 +110,7 @@ const bakeryListData = [
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
     "secondFermentation": { "time": { "min": 30, "max": 35, "classTime": 30 } },
     "secondFermentationHeight": ["팬높이 아래 1cm"], 
+	"extraProcess": "반죽 표면을 말린 후 칼집을 내고 버터를 짠다.",
     "bake": {
       "topHeat": 170,
       "bottomHeat": 180,
@@ -152,7 +154,7 @@ const bakeryListData = [
     "memo": "반죽온도 : 27도<br>" 
           + "분할, 둥글리기 중간과정 없음<br>"
 		  + "반죽을 2등분하여 야자잎 12개, 트리플리프 9개를 만든다<br>"
-          + "밀어펴기 : 야자잎형(가로54cm), 트리플리프(가로58cm) -> 계피설탕 충전하여 말기 -> 자르기 (각 잎이 2cm)<br>"
+          + "밀어펴기 : 야자잎형(가로55cm), 트리플리프(가로58cm) -> 계피설탕 충전하여 말기 -> 자르기 (각 잎이 2cm)<br>"
 		  + "잎이 잘 벌어지도록 최소한만 남기고 자른다"
   }
 ];
