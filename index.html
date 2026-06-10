@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제빵기능사 실기 암기 시험지</title>
+    <title>제빵기능사 실기</title>
     <style>
         body {
             font-family: 'Malgun Gothic', sans-serif;
@@ -28,8 +28,35 @@
             padding-bottom: 10px;
             margin-top: 0;
         }
+        
+        /* 상단 모드 스위치 탭 스타일 */
+        .mode-container {
+            display: flex;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #eee;
+            color: #555;
+            transition: all 0.2s;
+            margin: 0;
+            border-radius: 0;
+        }
+        .mode-btn.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
         .select-area {
-            margin: 20px 0;
+            margin: 0 0 20px 0;
             padding: 15px;
             background-color: #e8f5e9;
             border-radius: 5px;
@@ -41,8 +68,30 @@
             border: 1px solid #ccc;
         }
         .bread-select { width: 60%; }
-        .mixing-select, .height-select { width: 100%; max-width: 300px; }
+        .mixing-select { width: 100%; max-width: 350px; }
         
+        /* 💡 [추가] 체크박스 리스트 레이아웃 스타일 */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+            padding-left: 2px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #333;
+            cursor: pointer;
+        }
+        .checkbox-label input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+        }
+
         /* 공부용 메모/비고 상자 스타일 */
         .memo-box {
             background-color: #fff9db;
@@ -55,6 +104,27 @@
             color: #d9480f;
         }
         .memo-title { font-weight: bold; }
+
+        /* 중간 발효 스타일 */
+        .mid-proof-info {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mid-proof-title {
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+        .mid-proof-value {
+            color: #555;
+        }
 
         /* 수업 근거 자료 이미지 상자 스타일 */
         .evidence-box {
@@ -80,6 +150,10 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             border: 1px solid #ddd;
         }
+        .evidence-img.no-data {
+            max-width: 220px;
+            opacity: 0.7;
+        }
 
         /* 개별 문제 카드 스타일 */
         .question-card {
@@ -97,7 +171,12 @@
             margin-bottom: 12px;
         }
         
-        /* 💡 입력창 기본 정렬 (PC/태블릿 버전: 가로 배치 보장) */
+        /* 입력창 및 결과 컨테이너 구조 */
+        .input-block-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
         .input-row {
             display: flex;
             flex-wrap: wrap;
@@ -113,17 +192,20 @@
             box-sizing: border-box;
         }
         .input-short { width: 70px; text-align: center; }
-        .input-class-time { width: 65px; text-align: center; border: 1px solid #9b59b6; background-color: #faf0ff; }
         
-        /* 수업 시간 라벨 기본 스타일 (PC/태블릿에서는 한 줄 우측 배치) */
-        .class-label {
-            color: #8e44ad;
-            font-weight: bold;
-            margin-left: 10px;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        /* 수업시간 정보 스타일 (텍스트 검정색, 원래 글씨체) */
+        .class-info-feedback {
+            color: #000;
+            font-size: 14.5px;
+            margin-top: 6px;
+            padding-left: 4px;
+            display: none; 
+        }
+
+        /* 공부 모드 정답 강조용 블루 스타일 (볼드체) */
+        .highlight-blue {
+            color: #0d6efd;
+            font-weight: 800;
         }
 
         /* 채점 결과 스타일 */
@@ -175,20 +257,17 @@
         }
         .sub-btn-group { margin-top: 15px; display: none; }
 
-        /* 💡 스마트폰 전용 반응형 미디어 쿼리 (화면 폭이 500px 이하일 때) */
-        @media (max-width: 500px) {
+        /* 공부모드 내비게이션 버튼용 구역 */
+        .study-nav-group {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
             .quiz-container { padding: 15px; }
             .bread-select { width: 100%; margin-top: 5px; }
-            
-            /* 모바일에서 수업 입력창을 한 줄 아래로 강제 줄바꿈 및 간격 확보 */
-            .class-label {
-                display: flex;
-                width: 100%;
-                margin-left: 0;
-                margin-top: 8px; 
-                padding-top: 8px;
-                border-top: 1px dashed #e8dbf0; /* 미세한 구분선 */
-            }
         }
     </style>
 </head>
@@ -197,6 +276,11 @@
 <div class="quiz-container">
     <h1>📝 제빵기능사 실기 모의고사</h1>
     
+    <div class="mode-container">
+        <button id="btn-mode-study" class="mode-btn active" onclick="changeMode('study')">📖 공부 모드 (정답 보기)</button>
+        <button id="btn-mode-test" class="mode-btn" onclick="changeMode('test')">📝 테스트 모드 (시험 보기)</button>
+    </div>
+
     <div class="select-area" id="select-zone">
         <label for="bread-selector"><b>학습할 품목 선택:</b> </label>
         <select id="bread-selector" class="bread-select" onchange="startQuizBySelection()">
@@ -219,6 +303,11 @@
                 <button onclick="nextBreadExam()" class="btn-gray">👉 다음 품목 바로보기</button>
             </div>
             
+            <div id="study-navigation" class="study-nav-group" style="display: none;">
+                <button onclick="prevBreadExam()" class="btn-gray">⬅️ 이전 품목 보기</button>
+                <button onclick="nextBreadExam()" class="btn-blue">➡️ 다음 품목 보기</button>
+            </div>
+            
             <div class="final-result" id="final-score">최종 점수: 0 / 0</div>
             
             <div class="sub-btn-group" id="extra-buttons">
@@ -233,12 +322,32 @@
 
 <script>
 let questions = [];
+let currentMode = "study"; 
 const mixingStages = ["픽업단계", "클린업단계", "발전단계", "최종단계", "최종단계후기", "렛다운단계", "브레이크단계"];
-const heightStages = ["팬높이", "팬높이 아래 5cm", "팬높이 아래 10cm"];
+
+// 💡 [수정] 요청하신 고정 선택지 3가지 정의
+const heightOptions = ["팬높이", "팬높이 아래 0.5cm", "팬높이 아래 1cm"];
 
 window.onload = function() {
     initSelector();
 };
+
+function changeMode(mode) {
+    currentMode = mode;
+    document.getElementById("btn-mode-study").classList.remove("active");
+    document.getElementById("btn-mode-test").classList.remove("active");
+    
+    if (mode === "study") {
+        document.getElementById("btn-mode-study").classList.add("active");
+    } else {
+        document.getElementById("btn-mode-test").classList.add("active");
+    }
+    
+    const selector = document.getElementById("bread-selector");
+    if (selector.value !== "") {
+        startQuizBySelection();
+    }
+}
 
 function initSelector() {
     const selector = document.getElementById("bread-selector");
@@ -259,7 +368,6 @@ function startQuizBySelection() {
 
     const selectedData = bakeryListData[selectedIdx];
     
-    // 1. 메모 영역 세팅
     const memoArea = document.getElementById("memo-area");
     if (selectedData.memo && selectedData.memo.trim() !== "") {
         memoArea.innerHTML = `
@@ -272,7 +380,6 @@ function startQuizBySelection() {
         memoArea.innerHTML = "";
     }
 
-    // 2. 근거 자료 이미지 틀 생성
     const evidenceArea = document.getElementById("evidence-area");
     if (selectedData.proofImage && selectedData.proofImage.trim() !== "") {
         evidenceArea.innerHTML = `
@@ -282,7 +389,16 @@ function startQuizBySelection() {
             </div>
         `;
     } else {
-        evidenceArea.innerHTML = "";
+        evidenceArea.innerHTML = `
+            <div class="evidence-box" id="evidence-box-id">
+                <div class="evidence-title">📄 수업 자료 (이미지 없음)</div>
+                <img src="no_data.png" alt="자료 없음" class="evidence-img no-data">
+            </div>
+        `;
+    }
+
+    if (currentMode === "study") {
+        evidenceArea.firstElementChild.style.display = "block";
     }
 
     questions = parseJsonToQuestions(selectedData);
@@ -290,9 +406,24 @@ function startQuizBySelection() {
     document.getElementById("current-bread-title").innerText = `🎯 품목: ${selectedData.name}`;
     document.getElementById("final-score").style.display = "none";
     document.getElementById("extra-buttons").style.display = "none";
-    document.getElementById("main-buttons").style.display = "block";
     
-    buildExamPaper();
+    if (currentMode === "study") {
+        document.getElementById("main-buttons").style.display = "none";
+        document.getElementById("study-navigation").style.display = "flex";
+    } else {
+        document.getElementById("main-buttons").style.display = "block";
+        document.getElementById("study-navigation").style.display = "none";
+    }
+    
+    let midProofText = "";
+    if (selectedData.intermediateProof?.time) {
+        const infoTime = selectedData.intermediateProof.time;
+        midProofText = `${infoTime.min}분 ~ ${infoTime.max}분`;
+        if (infoTime.min === infoTime.max) midProofText = `${infoTime.min}분`;
+        if (infoTime.classTime) midProofText += ` (수업시간에 실습한 시간: ${infoTime.classTime}분)`;
+    }
+
+    buildExamPaper(midProofText);
     document.getElementById("quiz-zone").style.display = "block";
 }
 
@@ -301,64 +432,115 @@ function parseJsonToQuestions(data) {
     let qNum = 1;
 
     if (data.mixing) {
-        qList.push({ text: `${qNum++}. 믹싱 단계를 선택하세요.`, type: "select-mixing", answer: data.mixing });
+        qList.push({ 
+            text: `${qNum}. 믹싱 단계를 선택하세요.`, 
+            studyText: `${qNum}. 믹싱 단계`, 
+            type: "select-mixing", 
+            answer: data.mixing 
+        });
+        qNum++;
     }
     if (data.firstFermentation?.time) {
-        qList.push({ text: `${qNum++}. 1차 발효 시간(분)을 입력하세요.`, type: "range", min: data.firstFermentation.time.min, max: data.firstFermentation.time.max, classTime: data.firstFermentation.time.classTime });
-    }
-    if (data.intermediateProof?.time) {
-        qList.push({ text: `${qNum++}. 중간 발효 시간(분)을 입력하세요.`, type: "range", min: data.intermediateProof.time.min, max: data.intermediateProof.time.max, classTime: data.intermediateProof.time.classTime });
+        qList.push({ 
+            text: `${qNum}. 1차 발효 시간(분)을 입력하세요.`, 
+            studyText: `${qNum}. 1차 발효 시간`, 
+            type: "range", 
+            min: data.firstFermentation.time.min, 
+            max: data.firstFermentation.time.max, 
+            classTime: data.firstFermentation.time.classTime 
+        });
+        qNum++;
     }
     if (data.secondFermentation?.time) {
-        qList.push({ text: `${qNum++}. 2차 발효 시간(분)을 입력하세요.`, type: "range", min: data.secondFermentation.time.min, max: data.secondFermentation.time.max, classTime: data.secondFermentation.time.classTime });
+        qList.push({ 
+            text: `${qNum}. 2차 발효 시간(분)을 입력하세요.`, 
+            studyText: `${qNum}. 2차 발효 시간`, 
+            type: "range", 
+            min: data.secondFermentation.time.min, 
+            max: data.secondFermentation.time.max, 
+            classTime: data.secondFermentation.time.classTime 
+        });
+        qNum++;
     }
-    if (data.secondFermentationHeight && data.secondFermentationHeight.trim() !== "") {
-        qList.push({ text: `${qNum++}. 2차 발효 완료 시점의 알맞은 팬 높이 기준을 선택하세요.`, type: "select-height", answer: data.secondFermentationHeight });
+    // 💡 [수정] 타입 명칭을 checkbox-height 로 변경 및 데이터 바인딩 규칙 유지
+    if (data.secondFermentationHeight) {
+        qList.push({ 
+            text: `${qNum}. 2차 발효 완료 시점을 선택하세요. (중복 선택 가능)`, 
+            studyText: `${qNum}. 2차 발효 완료 시점`, 
+            type: "checkbox-height", 
+            answer: Array.isArray(data.secondFermentationHeight) ? data.secondFermentationHeight : [data.secondFermentationHeight]
+        });
+        qNum++;
     }
     if (data.bake) {
         if (data.bake.topHeat && data.bake.bottomHeat) {
-            qList.push({ text: `${qNum++}. 굽기 오븐 온도를 입력하세요.`, type: "bakeHeat", top: data.bake.topHeat, bottom: data.bake.bottomHeat });
+            qList.push({ 
+                text: `${qNum}. 오븐 온도를 입력하세요.`, 
+                studyText: `${qNum}. 오븐 온도`, 
+                type: "bakeHeat", 
+                top: data.bake.topHeat, 
+                bottom: data.bake.bottomHeat 
+            });
+            qNum++;
         }
         if (data.bake.time) {
-            qList.push({ text: `${qNum++}. 굽기 시간(분)을 입력하세요.`, type: "range", min: data.bake.time.min, max: data.bake.time.max, classTime: data.bake.time.classTime });
+            qList.push({ 
+                text: `${qNum}. 굽기 시간(분)을 입력하세요.`, 
+                studyText: `${qNum}. 굽기 시간`, 
+                type: "range", 
+                min: data.bake.time.min, 
+                max: data.bake.time.max, 
+                classTime: data.bake.time.classTime 
+            });
+            qNum++;
         }
     }
     return qList;
 }
 
-function buildExamPaper() {
+function buildExamPaper(midProofText) {
     const paperArea = document.getElementById("paper-area");
     paperArea.innerHTML = ""; 
 
     questions.forEach((q, idx) => {
         let inputHtml = "";
+        let studyAnswerHtml = ""; 
 
         if (q.type === "select-mixing") {
             inputHtml = `<select id="input-${idx}" class="mixing-select"><option value="">-- 단계를 선택하세요 --</option>`;
             mixingStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
             inputHtml += `</select>`;
-        } else if (q.type === "select-height") {
-            inputHtml = `<select id="input-${idx}" class="height-select"><option value="">-- 높이 기준을 선택하세요 --</option>`;
-            heightStages.forEach(stage => { inputHtml += `<option value="${stage}">${stage}</option>`; });
-            inputHtml += `</select>`;
+            studyAnswerHtml = `: <span class="highlight-blue">${q.answer}</span>`;
+        } else if (q.type === "checkbox-height") {
+            // 💡 [수정] 드롭박스를 제거하고, 3가지 선택지를 가진 체크박스 그룹 생성
+            inputHtml = `<div class="checkbox-group">`;
+            heightOptions.forEach((opt, oIdx) => {
+                inputHtml += `
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="chk-${idx}" value="${opt}"> ${opt}
+                    </label>
+                `;
+            });
+            inputHtml += `</div>`;
+            studyAnswerHtml = `: <span class="highlight-blue">${q.answer.join(", ")}</span>`;
         } else if (q.type === "range") {
-            // 💡 반응형 구조 정렬을 위해 input-row 래퍼 클래스를 씌워줍니다.
             if (q.min === q.max) {
-                inputHtml = `<div class="input-row"><input type="number" id="input-${idx}-single" class="input-short"> 분</div>`;
+                inputHtml = `
+                    <div class="input-block-group">
+                        <div class="input-row"><input type="number" id="input-${idx}-single" class="input-short"> 분</div>
+                    </div>
+                `;
+                studyAnswerHtml = `: <span class="highlight-blue">${q.min}분</span>`;
             } else {
                 inputHtml = `
-                    <div class="input-row">
-                        <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
-                        <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
+                    <div class="input-block-group">
+                        <div class="input-row">
+                            <input type="number" id="input-${idx}-min" class="input-short" placeholder="최소"> 분 ~ 
+                            <input type="number" id="input-${idx}-max" class="input-short" placeholder="최대"> 분
+                        </div>
+                    </div>
                 `;
-                if (q.classTime) {
-                    inputHtml += `
-                        <span class="class-label">🍇 수업: 
-                            <input type="number" id="input-${idx}-class" class="input-class-time"> 분
-                        </span>
-                    `;
-                }
-                inputHtml += `</div>`;
+                studyAnswerHtml = `: <span class="highlight-blue">${q.min}분 ~ ${q.max}분</span>`;
             }
         } else if (q.type === "bakeHeat") {
             inputHtml = `
@@ -367,15 +549,38 @@ function buildExamPaper() {
                     밑불: <input type="number" id="input-${idx}-bottom" class="input-short"> ℃
                 </div>
             `;
+            studyAnswerHtml = `: <span class="highlight-blue">윗불 ${q.top}℃ / 밑불 ${q.bottom}℃</span>`;
+        }
+
+        let titleText = q.text; 
+        let finalInputSection = `<div>${inputHtml}</div>`;
+        let studyBox = "";
+        let classInfoStyle = "display: none;"; 
+
+        if (currentMode === "study") {
+            titleText = q.studyText; 
+            finalInputSection = ""; 
+            studyBox = `<span class="study-answer-box-inline">${studyAnswerHtml}</span>`; 
+            classInfoStyle = "display: block;"; 
         }
 
         paperArea.innerHTML += `
             <div class="question-card" id="card-${idx}">
-                <div class="question-text">${q.text}</div>
-                <div>${inputHtml}</div>
+                <div class="question-text">${titleText}${studyBox}</div>
+                ${finalInputSection}
                 <div class="feedback" id="feedback-${idx}"></div>
+                ${q.classTime ? `<div id="class-info-${idx}" class="class-info-feedback" style="${classInfoStyle}">🍇 수업시간에 실습한 시간 : ${q.classTime}분</div>` : ''}
             </div>
         `;
+
+        if (q.type === "range" && q.text.includes("1차 발효") && midProofText !== "") {
+            paperArea.innerHTML += `
+                <div class="mid-proof-info">
+                    <span class="mid-proof-title">⏳ 중간발효:</span>
+                    <span class="mid-proof-value">${midProofText}</span>
+                </div>
+            `;
+        }
     });
 }
 
@@ -388,10 +593,19 @@ function gradeExam() {
         let isCorrect = false;
         let correctMessage = "";
 
-        if (q.type === "select-mixing" || q.type === "select-height") {
+        if (q.type === "select-mixing") {
             const userAns = document.getElementById(`input-${idx}`).value;
             isCorrect = (userAns === q.answer);
             correctMessage = `정답: ${q.answer}`;
+        } else if (q.type === "checkbox-height") {
+            // 💡 [수정] 체크박스 채점 처리 다중 배열 비교 로직
+            const checkboxes = document.querySelectorAll(`input[name="chk-${idx}"]:checked`);
+            const userAnswers = Array.from(checkboxes).map(cb => cb.value);
+            
+            // 정답 배열과 사용자 선택 배열의 원소 개수 및 내용 일치 확인 (순서 무관)
+            isCorrect = (userAnswers.length === q.answer.length) && 
+                        userAnswers.every(val => q.answer.includes(val));
+            correctMessage = `정답: ${q.answer.join(", ")}`;
         } else if (q.type === "range") {
             if (q.min === q.max) {
                 const userAns = parseInt(document.getElementById(`input-${idx}-single`).value);
@@ -401,16 +615,8 @@ function gradeExam() {
                 const userMin = parseInt(document.getElementById(`input-${idx}-min`).value);
                 const userMax = parseInt(document.getElementById(`input-${idx}-max`).value);
                 
-                let rangeCheck = (userMin === q.min && userMax === q.max);
+                isCorrect = (userMin === q.min && userMax === q.max);
                 correctMessage = `정답: ${q.min} ~ ${q.max}분`;
-                
-                if (q.classTime) {
-                    const userClass = parseInt(document.getElementById(`input-${idx}-class`).value);
-                    isCorrect = (rangeCheck && userClass === q.classTime);
-                    correctMessage += ` / 수업 실습: ${q.classTime}분`;
-                } else {
-                    isCorrect = rangeCheck;
-                }
             }
         } else if (q.type === "bakeHeat") {
             const userTop = parseInt(document.getElementById(`input-${idx}-top`).value);
@@ -420,26 +626,25 @@ function gradeExam() {
         }
 
         feedback.style.display = "block";
+        const classInfoEl = document.getElementById(`class-info-${idx}`);
+        
         if (isCorrect) {
             card.className = "question-card correct-card";
             feedback.className = "feedback correct-text";
             feedback.innerText = "⭕ 정답입니다!";
             finalScore++;
+            if (classInfoEl) classInfoEl.style.display = "block"; 
         } else {
             card.className = "question-card wrong-card";
             feedback.className = "feedback wrong-text";
             feedback.innerText = `❌ 오답입니다. (${correctMessage})`;
+            if (classInfoEl) classInfoEl.style.display = "none"; 
         }
     });
 
     const finalScoreDiv = document.getElementById("final-score");
     finalScoreDiv.style.display = "block";
     finalScoreDiv.innerText = `💯 점수: ${finalScore} / ${questions.length}`;
-    
-    const evidenceBox = document.getElementById("evidence-box-id");
-    if (evidenceBox) {
-        evidenceBox.style.display = "block";
-    }
 
     document.getElementById("main-buttons").style.display = "none";
     document.getElementById("extra-buttons").style.display = "block";
@@ -454,44 +659,59 @@ function resetCurrentExam() {
         feedback.style.display = "none";
         feedback.innerText = "";
 
-        if (q.type === "select-mixing" || q.type === "select-height") {
-            document.getElementById(`input-${idx}`).value = "";
+        if (q.type === "select-mixing") {
+            const el = document.getElementById(`input-${idx}`);
+            if (el) el.value = "";
+        } else if (q.type === "checkbox-height") {
+            // 💡 [수정] 체크박스 선택 모두 해제 처리
+            const checkboxes = document.querySelectorAll(`input[name="chk-${idx}"]`);
+            checkboxes.forEach(cb => cb.checked = false);
         } else if (q.type === "range") {
             if (q.min === q.max) {
-                document.getElementById(`input-${idx}-single`).value = "";
+                const el = document.getElementById(`input-${idx}-single`);
+                if (el) el.value = "";
             } else {
-                document.getElementById(`input-${idx}-min`).value = "";
-                document.getElementById(`input-${idx}-max`).value = "";
-                if (q.classTime) {
-                    document.getElementById(`input-${idx}-class`).value = "";
-                }
+                const elMin = document.getElementById(`input-${idx}-min`);
+                const elMax = document.getElementById(`input-${idx}-max`);
+                if (elMin) elMin.value = "";
+                if (elMax) elMax.value = "";
             }
+            const classInfoEl = document.getElementById(`class-info-${idx}`);
+            if (classInfoEl) classInfoEl.style.display = "none";
         } else if (q.type === "bakeHeat") {
-            document.getElementById(`input-${idx}-top`).value = "";
-            document.getElementById(`input-${idx}-bottom`).value = "";
+            const elTop = document.getElementById(`input-${idx}-top`);
+            const elBottom = document.getElementById(`input-${idx}-bottom`);
+            if (elTop) elTop.value = "";
+            if (elBottom) elBottom.value = "";
         }
     });
 
     const evidenceBox = document.getElementById("evidence-box-id");
-    if (evidenceBox) {
-        evidenceBox.style.display = "none";
-    }
+    if (evidenceBox) evidenceBox.style.display = "none";
 
     document.getElementById("final-score").style.display = "none";
     document.getElementById("extra-buttons").style.display = "none";
     document.getElementById("main-buttons").style.display = "block";
 }
 
+function prevBreadExam() {
+    const selector = document.getElementById("bread-selector");
+    let currentIdx = parseInt(selector.value);
+    if (isNaN(currentIdx)) currentIdx = 0;
+
+    let prevIdx = currentIdx - 1;
+    if (prevIdx < 0) prevIdx = bakeryListData.length - 1;
+    selector.value = prevIdx;
+    startQuizBySelection();
+}
+
 function nextBreadExam() {
     const selector = document.getElementById("bread-selector");
     let currentIdx = parseInt(selector.value);
-    
     if (isNaN(currentIdx)) currentIdx = -1;
 
     let nextIdx = currentIdx + 1;
-    if (nextIdx >= bakeryListData.length) {
-        nextIdx = 0;
-    }
+    if (nextIdx >= bakeryListData.length) nextIdx = 0;
     selector.value = nextIdx;
     startQuizBySelection();
 }

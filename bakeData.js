@@ -1,4 +1,3 @@
-// bakeData.js 파일 내용
 const bakeryListData = [
   {
     "name": "식빵",
@@ -6,14 +5,17 @@ const bakeryListData = [
     "firstFermentation": { "time": { "min": 15, "max": 35, "classTime": 30 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
     "secondFermentation": { "time": { "min": 30, "max": 35, "classTime": 30 } },
-	"secondFermentationHeight": "팬높이",
+    "secondFermentationHeight": ["팬높이"],
     "bake": {
       "topHeat": 170,
       "bottomHeat": 190,
-      "time": { "min": 30, "max": 35, "classTime": 30 }
+      "time": { "min": 30, "max": 35 }
     },
-	"proofImage": "images/proof_식빵.jpg",
-    "memo": "- 비상스트레이트법<br>- 반죽온도: 30도<br>- 170g 분할 (삼봉형)<br>- 성형 : 타원형으로 밀기 -> 3겹접기 -> 말기 -> 봉하기"
+    "proofImage": "images/proof_식빵.jpg",
+    "memo": "- 비상스트레이트법<br>"
+          + "- 반죽온도 : 30도<br>"
+          + "- 170g 분할 (삼봉형)<br>"
+          + "- 타원형으로 밀기 -> 3겹 접기 -> 말기 -> 봉하기"
   },
   {
     "name": "그리시니",
@@ -26,7 +28,10 @@ const bakeryListData = [
       "bottomHeat": 160,
       "time": { "min": 18, "max": 20 }
     },
-    "memo": "성형:눌러펴기 -> 말기 -> 35~40cm 길이로 늘리기<br>반죽온도: 27도"
+    "proofImage": "images/proof_그리시니.jpg",
+    "memo": "- 반죽온도 : 27도<br>"
+          + "30g 분할, 전량사용하여 42개 만들기<br>"
+          + "눌러펴기 -> 말기 -> 35~40cm 길이로 늘리기"
   },
   {
     "name": "베이글",
@@ -39,8 +44,30 @@ const bakeryListData = [
       "bottomHeat": 190,
       "time": { "min": 18, "max": 20 }
     },
-    "memo": "성형:눌러펴기 -> 말기 -> 27~30cm 길이로 늘리기 -> 링모양 만들어 꼬집기 <br>80도 끓는물에 5초씩 양면데치기"
+    "proofImage": "images/proof_베이글.jpg",
+    "memo": "반죽온도 : 27도<br>" 
+          + "80g 분할 17개<br>"
+          + "눌러펴기 -> 3겹 접기 -> 말기 -> 봉하기 -> 27~30cm 길이로 늘리기 -> 링모양 만들어 꼬집기 -> 16개<br>"
+          + "80도 끓는물에 5초씩 양면데치기<br>"
+          + "1팬 8개 팬닝 * 2"
   },
+  {
+    "name": "단과자 트위스트",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 15, "max": 15 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35 } },
+    "bake": {
+      "topHeat": 190,
+      "bottomHeat": 140,
+      "time": { "min": 15, "max": 17 }
+    },
+    "proofImage": "images/proof_단과자트위스트.jpg",
+    "memo": "반죽온도 : 27도<br>" 
+          + "50g 분할 (시험 24개)<br>"
+          + "달팽이형 12개 (30cm 늘리기), 8자 12개 (25cm 늘리기 -> 꼬기)<br>"
+          + "1팬 10~11개 팬닝 혹은 1팬 최대 15개 팬닝(팬 크기에 따라 다름)"
+  }, 
   {
     "name": "호밀빵",
     "mixing": "발전단계",
@@ -52,58 +79,80 @@ const bakeryListData = [
       "bottomHeat": 160,
       "time": { "min": 30, "max": 30 }
     },
-    "memo": "성형:눌러펴기 -> 럭비공 모양으로 말기 -> 봉하기 -> 22~23센티로 살짝 밀기<br>칼집 1센티정도 낸 후 분무하기<br>반죽온도: 25도"
-  },
-  {
-    "name": "호밀빵",
-    "mixing": "발전단계",
-    "firstFermentation": { "time": { "min": 40, "max": 40 } },
-    "intermediateProof": { "time": { "min": 10, "max": 10 } },
-    "secondFermentation": { "time": { "min": 27, "max": 30 } },
-    "bake": {
-      "topHeat": 220,
-      "bottomHeat": 200,
-      "time": { "min": 28, "max": 30 }
-    },
-    "memo": "성형:눌러펴기 -> 럭비공 모양으로 말기 -> 봉하기 -> 22~23센티로 살짝 밀기 <br>2차 발효 후 겉면을 말려 1센티깊이로 칼집내기"
+    "proofImage": "images/proof_호밀빵.jpg",
+    "memo": "반죽온도 : 25도<br>" 
+          + "330g 분할 6개(전량)<br>"
+          + "밀기 -> 말기 -> 봉하기 -> 23cm 정도 럭비공 모양으로 성형<br>"
+          + "말린 후 칼집내기 -> 옆면까지 물 뿌리기"
   },
   {
     "name": "통밀빵",
     "mixing": "발전단계",
-    "firstFermentation": { "time": { "min": 40, "max": 40 } },
+    "firstFermentation": { "time": { "min": 50, "max": 50 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
-    "secondFermentation": { "time": { "min": 27, "max": 30 } },
+    "secondFermentation": { "time": { "min": 40, "max": 45, "classTime": 40 } },
     "bake": {
-      "topHeat": 220,
-      "bottomHeat": 200,
-      "time": { "min": 28, "max": 30 }
+      "topHeat": 200,
+      "bottomHeat": 150,
+      "time": { "min": 20, "max": 22 }
     },
-    "memo": "성형:눌러펴기 -> 럭비공 모양으로 말기 -> 봉하기 -> 22~23센티로 살짝 밀기 <br>2차 발효 후 겉면을 말려 1센티깊이로 칼집내기"
+    "proofImage": "images/proof_통밀빵.jpg",
+    "memo": "반죽온도 : 25도<br>" 
+          + "200g 분할 9개(시험 8개)<br>"
+          + "밀기 -> 3겹접기 -> 말기 -> 늘리기 -> 밀대(봉)형 22~23cm로 성형<br>"
+          + "오트밀 묻히기 (밑면은 안묻힌다)"
   },
   {
     "name": "버터톱식빵",
     "mixing": "최종단계",
-    "firstFermentation": { "time": { "min": 40, "max": 40 } },
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
-    "secondFermentation": { "time": { "min": 27, "max": 30 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35, "classTime": 30 } },
+    "secondFermentationHeight": ["팬높이 아래 1cm"], 
     "bake": {
-      "topHeat": 220,
-      "bottomHeat": 200,
-      "time": { "min": 28, "max": 30 }
+      "topHeat": 170,
+      "bottomHeat": 180,
+      "time": { "min": 30, "max": 35 }
     },
-    "memo": "성형:눌러펴기 -> 럭비공 모양으로 말기 -> 봉하기 -> 22~23센티로 살짝 밀기 <br>2차 발효 후 겉면을 말려 1센티깊이로 칼집내기"
+    "proofImage": "images/proof_버터톱식빵.jpg",
+    "memo": "반죽온도 : 27도<br>" 
+          + "460g 분할 5개(전량사용)<br>"
+          + "밀기 -> 말기 -> 봉하기<br>"
+          + "말린 후 칼집내기 -> 짤주머니로 버터 짜기"
   },
   {
     "name": "우유식빵",
-    "mixing": "발전단계",
-    "firstFermentation": { "time": { "min": 40, "max": 40 } },
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
     "intermediateProof": { "time": { "min": 10, "max": 10 } },
-    "secondFermentation": { "time": { "min": 27, "max": 30 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35, "classTime": 30 } },
+    "secondFermentationHeight": ["팬높이", "팬높이 아래 0.5cm"], 
     "bake": {
-      "topHeat": 220,
-      "bottomHeat": 200,
-      "time": { "min": 28, "max": 30 }
+      "topHeat": 170,
+      "bottomHeat": 180,
+      "time": { "min": 30, "max": 35 }
     },
-    "memo": "성형:눌러펴기 -> 럭비공 모양으로 말기 -> 봉하기 -> 22~23센티로 살짝 밀기 <br>2차 발효 후 겉면을 말려 1센티깊이로 칼집내기"
+    //"proofImage": "images/proof_우유식빵.jpg",
+    "memo": "반죽온도 : 27도<br>" 
+          + "180g 분할 12개(전량사용)<br>"
+          + "밀기 -> 3단접기 -> 말기 -> 봉하기"
+  },
+  {
+    "name": "스위트롤",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 50, "max": 50 } },
+    //"intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 30 } },
+    "bake": {
+      "topHeat": 190,
+      "bottomHeat": 140,
+      "time": { "min": 15, "max": 17 }
+    },
+    "proofImage": "images/proof_스위트롤.jpg",
+    "memo": "반죽온도 : 27도<br>" 
+          + "분할, 둥글리기 중간과정 없음<br>"
+		  + "반죽을 2등분하여 야자잎 12개, 트리플리프 9개를 만든다<br>"
+          + "밀어펴기 : 야자잎형(가로54cm), 트리플리프(가로58cm) -> 계피설탕 충전하여 말기 -> 자르기 (각 잎이 2cm)<br>"
+		  + "잎이 잘 벌어지도록 최소한만 남기고 자른다"
   }
 ];
