@@ -423,7 +423,7 @@ function startQuizBySelection() {
         if (infoTime.classTime) midProofText += ` (수업시간에 실습한 시간: ${infoTime.classTime}분)`;
     }
 
-    buildExamPaper(midProofText);
+    buildExamPaper(midProofText, selectedData);
     document.getElementById("quiz-zone").style.display = "block";
 }
 
@@ -498,7 +498,7 @@ function parseJsonToQuestions(data) {
     return qList;
 }
 
-function buildExamPaper(midProofText) {
+function buildExamPaper(midProofText, selectedData) {
     const paperArea = document.getElementById("paper-area");
     paperArea.innerHTML = ""; 
 
@@ -580,8 +580,19 @@ function buildExamPaper(midProofText) {
                     <span class="mid-proof-value">${midProofText !== "" ? midProofText : "없음"}</span>
                 </div>
             `;
-        }
-    });
+        }	
+
+		// 2. 추가 작업 표시 (2차 발효 질문 직후에 삽입)
+        if (selectedData.extraProcess && q.text.includes("2차 발효")) {
+            paperArea.innerHTML += `
+                <div class="mid-proof-info">
+                    <span class="mid-proof-title">✂️ 추가 작업:</span>
+                    <span class="mid-proof-value">${selectedData.extraProcess}</span>
+                </div>
+            `;
+        }		
+    });	
+	
 }
 
 function gradeExam() {
