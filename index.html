@@ -573,11 +573,11 @@ function buildExamPaper(midProofText) {
             </div>
         `;
 
-        if (q.type === "range" && q.text.includes("1차 발효") && midProofText !== "") {
+        if (q.type === "range" && q.text.includes("1차 발효")) {
             paperArea.innerHTML += `
                 <div class="mid-proof-info">
                     <span class="mid-proof-title">⏳ 중간발효:</span>
-                    <span class="mid-proof-value">${midProofText}</span>
+                    <span class="mid-proof-value">${midProofText !== "" ? midProofText : "없음"}</span>
                 </div>
             `;
         }
