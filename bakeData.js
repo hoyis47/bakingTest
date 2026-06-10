@@ -58,7 +58,7 @@ const bakeryListData = [
     "mixing": "최종단계",
     "firstFermentation": { "time": { "min": 45, "max": 45 } },
     "intermediateProof": { "time": { "min": 15, "max": 15 } },
-    "secondFermentation": { "time": { "min": 30, "max": 35 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35, "classTime": 30 } },
     "bake": {
       "topHeat": 190,
       "bottomHeat": 140,
