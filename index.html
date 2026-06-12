@@ -269,6 +269,29 @@
             .quiz-container { padding: 15px; }
             .bread-select { width: 100%; margin-top: 5px; }
         }
+		
+		/* 영상보기 */
+		.video-btn {
+			padding: 10px;
+			background-color: #f8f9fa;
+			border: 1px solid #dee2e6;
+			border-radius: 5px;
+			color: #0d6efd;
+			text-decoration: none;
+			font-size: 14px;
+			transition: background 0.2s;
+		}
+		.video-btn:hover {
+			background-color: #e9ecef;
+		}
+		
+		/* 유튜브영상 보기 */
+		.video-wrapper {
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			overflow: hidden;
+			background-color: #000;
+}
     </style>
 </head>
 <body>
@@ -495,6 +518,15 @@ function parseJsonToQuestions(data) {
             qNum++;
         }
     }
+	if (currentMode === "study" && data.videos && Array.isArray(data.videos)) {
+        qList.push({ 
+            text: ` 영상 자료 (유튜브에서 재생)`, 
+            studyText: ` 영상 자료 (유튜브에서 재생)`, 
+            type: "videos", 
+            list: data.videos 
+        });
+        qNum++;
+    }
     return qList;
 }
 
@@ -550,17 +582,32 @@ function buildExamPaper(midProofText, selectedData) {
                 </div>
             `;
             studyAnswerHtml = `: <span class="highlight-blue">윗불 ${q.top}℃ / 밑불 ${q.bottom}℃</span>`;
-        }
+        } else if (q.type === "videos") {
+			// 영상 타입 처리: <iframe>을 사용하여 사이트 내 삽입
+			inputHtml = `<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">`;
+			q.list.forEach(v => {
+				inputHtml += `
+					<a href="${v.url}" target="_blank" rel="noopener noreferrer" class="video-btn" style="display: block; text-align: center; padding: 12px; border: 1px solid #3498db; border-radius: 5px; color: #3498db; text-decoration: none; font-weight: bold;">
+						▶ ${v.name} 
+					</a>`;
+			});
+			inputHtml += `</div>`;
+		}
 
         let titleText = q.text; 
-        let finalInputSection = `<div>${inputHtml}</div>`;
+        //let finalInputSection = `<div>${inputHtml}</div>`;
+		let finalInputSection = q.type !== "videos" ? `<div>${inputHtml}</div>` : inputHtml;
         let studyBox = "";
         let classInfoStyle = "display: none;"; 
 
         if (currentMode === "study") {
             titleText = q.studyText; 
-            finalInputSection = ""; 
-            studyBox = `<span class="study-answer-box-inline">${studyAnswerHtml}</span>`; 
+            //finalInputSection = ""; 
+            //studyBox = `<span class="study-answer-box-inline">${studyAnswerHtml}</span>`; 
+			if (q.type !== "videos") {
+                studyBox = `<span class="study-answer-box-inline">${studyAnswerHtml}</span>`;
+                finalInputSection = ""; 
+            }
             classInfoStyle = "display: block;"; 
         }
 

@@ -12,6 +12,9 @@ const bakeryListData = [
       "time": { "min": 30, "max": 35 }
     },
     "proofImage": "images/proof_식빵.jpg",
+	"videos": [
+        { name: "삼봉형 식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+    ],
     "memo": "- 비상스트레이트법<br>"
           + "- 반죽온도 : 30도<br>"
           + "- 170g 분할 (삼봉형)<br>"
@@ -29,6 +32,10 @@ const bakeryListData = [
       "time": { "min": 18, "max": 20 }
     },
     "proofImage": "images/proof_그리시니.jpg",
+	"videos": [
+        { name: "그리시니 성형", url: "https://youtu.be/nU11FRip-ZM" },
+		{ name: "그리시니 분할, 둥글리기", url: "https://youtube.com/shorts/ns_VBVUl96Q?feature=share" }
+    ],
     "memo": "- 반죽온도 : 27도<br>"
           + "- 30g 분할, 전량사용하여 42개 만들기<br>"
           + "- 눌러펴기 -> 말기 -> 35~40cm 길이로 늘리기<br>"
@@ -46,6 +53,10 @@ const bakeryListData = [
       "time": { "min": 18, "max": 20 }
     },
     "proofImage": "images/proof_베이글.jpg",
+	"videos": [
+        { name: "베이글 성형", url: "https://youtu.be/1nX-1sAwfWc" },
+		{ name: "베이글 데치기", url: "https://youtube.com/shorts/6SNqHiXZfc4?feature=share" }
+    ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 80g 분할 16개(시험기준)<br>"
           + "- 눌러펴기 -> 3겹 접기 -> 말기 -> 봉하기 -> 27~30cm 길이로 늘리기 -> 링모양 만들어 꼬집기<br>"
@@ -137,6 +148,9 @@ const bakeryListData = [
       "time": { "min": 30, "max": 35 }
     },
     //"proofImage": "images/proof_우유식빵.jpg",
+	"videos": [
+        { name: "우유식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+    ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 180g 분할 12개(전량사용)<br>"
           + "- 밀기 -> 3단접기 -> 말기 -> 봉하기"
@@ -158,5 +172,25 @@ const bakeryListData = [
 		  + "- 반죽을 2등분하여 야자잎 12개, 트리플리프 9개를 만든다<br>"
           + "- 밀어펴기 : 야자잎형(가로55cm), 트리플리프(가로58cm) -> 계피설탕 충전하여 말기 -> 자르기 (각 잎이 2cm)<br>"
 		  + "- 잎이 잘 벌어지도록 최소한만 남기고 자른다"
-  }
+  },
+  {
+    "name": "쌀식빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 50, "max": 50 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 40, "max": 45, "classTime": 40 } },
+    "secondFermentationHeight": ["팬높이 아래 1cm"],
+    "bake": {
+      "topHeat": 170,
+      "bottomHeat": 190,
+      "time": { "min": 30, "max": 30 }
+    },
+    "proofImage": "images/proof_쌀식빵.png",
+	"videos": [
+        { name: "쌀식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+    ],
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 198g 분할 (삼봉형)<br>"
+          + "- 타원형으로 밀기 -> 3겹 접기 -> 말기 -> 봉하기"
+  },
 ];
