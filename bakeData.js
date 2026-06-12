@@ -13,7 +13,7 @@ const bakeryListData = [
     },
     "proofImage": "images/proof_식빵.jpg",
 	"videos": [
-        { name: "삼봉형 식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+        { name: "삼봉형 식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
     ],
     "memo": "- 비상스트레이트법<br>"
           + "- 반죽온도 : 30도<br>"
