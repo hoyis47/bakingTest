@@ -34,7 +34,7 @@ const bakeryListData = [
     "proofImage": "images/proof_그리시니.jpg",
 	"videos": [
         { name: "그리시니 성형", url: "https://youtu.be/nU11FRip-ZM" },
-		{ name: "그리시니 분할, 둥글리기", url: "https://youtube.com/shorts/ns_VBVUl96Q?feature=share" }
+		{ name: "그리시니 분할, 둥글리기", url: "https://youtu.be/qRccwVGTYu4" }
     ],
     "memo": "- 반죽온도 : 27도<br>"
           + "- 30g 분할, 전량사용하여 42개 만들기<br>"
