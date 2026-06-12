@@ -55,7 +55,7 @@ const bakeryListData = [
     "proofImage": "images/proof_베이글.jpg",
 	"videos": [
         { name: "베이글 성형", url: "https://youtu.be/1nX-1sAwfWc" },
-		{ name: "베이글 데치기", url: "https://youtube.com/shorts/6SNqHiXZfc4?feature=share" }
+		{ name: "베이글 데치기", url: "https://youtu.be/vjT-xAHT6B0" }
     ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 80g 분할 16개(시험기준)<br>"
@@ -149,7 +149,7 @@ const bakeryListData = [
     },
     //"proofImage": "images/proof_우유식빵.jpg",
 	"videos": [
-        { name: "우유식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+        { name: "우유식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
     ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 180g 분할 12개(전량사용)<br>"
@@ -187,7 +187,7 @@ const bakeryListData = [
     },
     "proofImage": "images/proof_쌀식빵.png",
 	"videos": [
-        { name: "쌀식빵 성형", url: "https://youtube.com/shorts/4Mko-THPM1w?feature=share" }
+        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
     ],
     "memo": "- 반죽온도 : 27도<br>"
           + "- 198g 분할 (삼봉형)<br>"
