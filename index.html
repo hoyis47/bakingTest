@@ -495,7 +495,9 @@ function parseJsonToQuestions(data) {
         });
         qNum++;
     }
+	
     if (data.bake) {
+		/*
         if (data.bake.topHeat && data.bake.bottomHeat) {
             qList.push({ 
                 text: `${qNum}. 오븐 온도를 입력하세요.`, 
@@ -505,7 +507,24 @@ function parseJsonToQuestions(data) {
                 bottom: data.bake.bottomHeat 
             });
             qNum++;
-        }
+        }		
+		*/
+		if (data.bake.topHeat && data.bake.bottomHeat) {
+			// [수정] 품목 이름에 '도넛'이 포함되어 있는지 확인
+			const isDonut = data.name.includes("도넛");
+			const qText = isDonut ? "튀김 온도를 입력하세요." : "오븐 온도를 입력하세요.";
+			const studyText = isDonut ? "튀김 온도" : "오븐 온도";
+
+			qList.push({ 
+				text: `${qNum}. ${qText}`, 
+				studyText: `${qNum}. ${studyText}`, 
+				type: "bakeHeat", 
+				top: data.bake.topHeat, 
+				bottom: data.bake.bottomHeat,
+				isDonut: isDonut // 도넛 여부를 함께 전달
+			});
+			qNum++;
+		}
         if (data.bake.time) {
             qList.push({ 
                 text: `${qNum}. 굽기 시간(분)을 입력하세요.`, 
@@ -518,6 +537,8 @@ function parseJsonToQuestions(data) {
             qNum++;
         }
     }
+	
+		
 	if (currentMode === "study" && data.videos && Array.isArray(data.videos)) {
         qList.push({ 
             text: ` 영상 자료 (유튜브에서 재생)`, 
@@ -574,7 +595,7 @@ function buildExamPaper(midProofText, selectedData) {
                 `;
                 studyAnswerHtml = `: <span class="highlight-blue">${q.min}분 ~ ${q.max}분</span>`;
             }
-        } else if (q.type === "bakeHeat") {
+        } /*else if (q.type === "bakeHeat") {
             inputHtml = `
                 <div class="input-row">
                     윗불: <input type="number" id="input-${idx}-top" class="input-short"> ℃ / 
@@ -582,7 +603,24 @@ function buildExamPaper(midProofText, selectedData) {
                 </div>
             `;
             studyAnswerHtml = `: <span class="highlight-blue">윗불 ${q.top}℃ / 밑불 ${q.bottom}℃</span>`;
-        } else if (q.type === "videos") {
+        } */else if (q.type === "bakeHeat") {
+				// [수정] 도넛 여부에 따른 라벨 분기
+				const topLabel = q.isDonut ? "최저 온도" : "윗불";
+				const bottomLabel = q.isDonut ? "최대 온도" : "밑불"; // 또는 필요에 맞게 수정
+				
+				// 윗불/밑불 대신 튀김온도와 시간을 표시하고 싶다면 아래처럼 구성합니다.
+				inputHtml = `
+					<div class="input-row">
+						${q.isDonut ? "최저 온도:" : "윗불:"} <input type="number" id="input-${idx}-top" class="input-short"> ℃ / 
+						${q.isDonut ? "최대 온도:" : "밑불:"} <input type="number" id="input-${idx}-bottom" class="input-short"> ℃
+					</div>
+				`;
+				
+				// [수정] 공부 모드 정답 표시 문구도 조건부 처리
+				const topAns = q.top;
+				const bottomAns = q.bottom;
+				studyAnswerHtml = `: <span class="highlight-blue">${q.isDonut ? `최저 온도 ${topAns}℃ / 최대 온도 ${bottomAns}℃` : `윗불 ${topAns}℃ / 밑불 ${bottomAns}℃`}</span>`;
+			}else if (q.type === "videos") {
 			// 영상 타입 처리: <iframe>을 사용하여 사이트 내 삽입
 			inputHtml = `<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">`;
 			q.list.forEach(v => {

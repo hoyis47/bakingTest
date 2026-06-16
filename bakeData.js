@@ -201,4 +201,28 @@ const bakeryListData = [
           + "- 198g 분할 (삼봉형)<br>"
           + "- 타원형으로 밀기 -> 3겹 접기 -> 말기 -> 봉하기"
   },
+  {
+    "name": "빵도넛",
+    "mixing": "발전단계",
+    "firstFermentation": { "time": { "min": 40, "max": 40 } },
+    "intermediateProof": { "time": { "min": 15, "max": 15 } },
+    "secondFermentation": { "time": { "min": 20, "max": 25 } },
+    "bake": {
+      "topHeat": 185,
+      "bottomHeat": 190
+      //"time": { "min": 30, "max": 30 }
+    },
+    //"proofImage": "images/proof_쌀식빵.png",
+	/*
+	"videos": [
+        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 46g 분할 (44개 제출)<br>"
+          + "- 8자형 22개, 트위스트형(꽈배기형) 22개<br>"
+		  + "- 한팬에 11개씩 총 4팬 사용<br>"
+		  + "- 튀길 때 한번만 뒤집기<br>"
+		  + "- 튀긴 후 설탕 안 묻히고 제출"
+  }
 ];
