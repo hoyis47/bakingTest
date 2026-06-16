@@ -721,6 +721,7 @@ function gradeExam() {
             const userBottom = parseInt(document.getElementById(`input-${idx}-bottom`).value);
             isCorrect = (userTop === q.top && userBottom === q.bottom);
             correctMessage = `정답: 윗불 ${q.top}℃ / 밑불 ${q.bottom}℃`;
+			correctMessage = q.isDonut ? "정답: 최저 온도 " + q.top + "℃ / 최대 온도 " + q.bottom + "℃" : correctMessage;
         }
 
         feedback.style.display = "block";
