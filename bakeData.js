@@ -76,6 +76,10 @@ const bakeryListData = [
       "time": { "min": 15, "max": 17 }
     },
     "proofImage": "images/proof_단과자트위스트.jpg",
+	"videos": [
+        { name: "단과자 8자형", url: "https://youtu.be/8QD8urp32h4" },
+		{ name: "단과자 달팽이형", url: "https://youtu.be/2sYt_h1mmTU" }
+    ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 50g 분할 (시험 24개)<br>"
           + "- 달팽이형 12개 (30cm 늘리기), 8자 12개 (25cm 늘리기 -> 꼬기)"
@@ -94,6 +98,10 @@ const bakeryListData = [
       "time": { "min": 30, "max": 30 }
     },
     "proofImage": "images/proof_호밀빵.jpg",
+	"videos": [
+        { name: "호밀빵 성형", url: "https://youtu.be/Mn24C2wQzik" }
+		//{ name: "호밀빵 칼집내기", url: "https://youtu.be/2sYt_h1mmTU" }
+    ],
     "memo": "- 반죽온도 : 25도<br>" 
           + "- 330g 분할 6개(전량)<br>"
           + "- 밀기 -> 말기 -> 봉하기 -> 23cm 정도 럭비공 모양으로 성형<br>"
