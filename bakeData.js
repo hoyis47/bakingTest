@@ -224,5 +224,28 @@ const bakeryListData = [
 		  + "- 한팬에 11개씩 총 4팬 사용<br>"
 		  + "- 튀길 때 한번만 뒤집기<br>"
 		  + "- 튀긴 후 설탕 안 묻히고 제출"
+  },
+  {
+    "name": "모카빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 30 } },
+    "bake": {
+      "topHeat": 180,
+      "bottomHeat": 160,
+      "time": { "min": 25, "max": 30 }
+    },
+    "proofImage": "images/proof_모카빵.jpg",
+	/*
+	"videos": [
+        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 250g 분할 6개 제출<br>"
+		  + "- 비스킷 100g 사용 <br>"
+          + "- 타원형으로 밀기 -> 뒤집어 삼각형 만들기 -> 럭비공 모양으로 말기 -> 봉하기<br>"
+		  + "- 비스킷 성형 : 밀대를 동서남북방향으로 돌리며 타원형으로 만들기"
   }
 ];
