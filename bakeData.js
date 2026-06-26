@@ -119,6 +119,9 @@ const bakeryListData = [
       "time": { "min": 20, "max": 22 }
     },
     "proofImage": "images/proof_통밀빵.jpg",
+	"videos": [
+        { name: "통밀빵 성형", url: "https://youtu.be/9kPoBKXgqo0" }
+    ],
     "memo": "- 반죽온도 : 25도<br>" 
           + "- 200g 분할 9개(시험 8개)<br>"
           + "- 밀기 -> 3겹접기 -> 말기 -> 늘리기 -> 밀대(봉)형 22~23cm로 성형<br>"
@@ -138,6 +141,10 @@ const bakeryListData = [
       "time": { "min": 30, "max": 35 }
     },
     "proofImage": "images/proof_버터톱식빵.jpg",
+	"videos": [
+        { name: "버터톱식빵 성형", url: "https://youtu.be/RdP4ZcKJly4" },
+		{ name: "버터톱식빵 칼집내기", url: "https://youtu.be/l_iQC5fa5xg" }
+    ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 460g 분할 5개(전량사용)<br>"
           + "- 밀기 -> 말기 -> 봉하기<br>"
@@ -175,6 +182,9 @@ const bakeryListData = [
       "time": { "min": 15, "max": 17 }
     },
     "proofImage": "images/proof_스위트롤.jpg",
+	"videos": [
+        { name: "스위트롤 성형", url: "https://youtu.be/OqqF9DtUW2A" }
+    ],
     "memo": "- 반죽온도 : 27도<br>" 
           + "- 분할, 둥글리기 중간과정 없음<br>"
 		  + "- 반죽을 2등분하여 야자잎 12개, 트리플리프 9개를 만든다<br>"
