@@ -247,5 +247,28 @@ const bakeryListData = [
 		  + "- 비스킷 100g 사용 <br>"
           + "- 타원형으로 밀기 -> 뒤집어 삼각형 만들기 -> 럭비공 모양으로 말기 -> 봉하기<br>"
 		  + "- 비스킷 성형 : 밀대를 동서남북방향으로 돌리며 타원형으로 만들기"
+  },
+  {
+    "name": "크림빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35 } },
+    "bake": {
+      "topHeat": 190,
+      "bottomHeat": 140,
+      "time": { "min": 15, "max": 17 }
+    },
+    "proofImage": "images/proof_크림빵.jpg",
+	/*
+	"videos": [
+        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 45g(46g) 분할 24개 제출<br>"
+		  + "- 충전 12개, 비충전 12개 <br>"
+          + "- 비충전 : 타원형으로 밀기 -> 테두리에 식용유 바르기 -> 반으로 접기<br>"
+		  + "- 충전 : 타원형으로 밀기 -> 절반 아래에 커스터드(30g) 크림 넣기 -> 반으로 접기 -> 칼집내기"
   }
 ];
