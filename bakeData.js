@@ -208,6 +208,7 @@ const bakeryListData = [
         { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
     ],
     "memo": "- 반죽온도 : 27도<br>"
+		  + "- 발전단계 후기, 최종단계 둘다 가능<br>"
           + "- 198g 분할 (삼봉형)<br>"
           + "- 타원형으로 밀기 -> 3겹 접기 -> 말기 -> 봉하기"
   },
