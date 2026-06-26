@@ -99,8 +99,8 @@ const bakeryListData = [
     },
     "proofImage": "images/proof_호밀빵.jpg",
 	"videos": [
-        { name: "호밀빵 성형", url: "https://youtu.be/Mn24C2wQzik" }
-		//{ name: "호밀빵 칼집내기", url: "https://youtu.be/2sYt_h1mmTU" }
+        { name: "호밀빵 성형", url: "https://youtu.be/Mn24C2wQzik" },
+		{ name: "호밀빵 칼집내기", url: "https://youtu.be/8Qt1U0iF-sk" }
     ],
     "memo": "- 반죽온도 : 25도<br>" 
           + "- 330g 분할 6개(전량)<br>"
