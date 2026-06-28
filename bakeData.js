@@ -223,12 +223,11 @@ const bakeryListData = [
       "bottomHeat": 190
       //"time": { "min": 30, "max": 30 }
     },
-    //"proofImage": "images/proof_쌀식빵.png",
-	/*
+    //"proofImage": "images/proof_쌀식빵.png",	
 	"videos": [
-        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
-    ],
-	*/
+        { name: "빵도넛 성형", url: "https://youtu.be/cKRjio2MyuY" },
+		{ name: "빵도넛 튀기기", url: "https://youtu.be/eoeDNW5DWyU" }
+    ],	
     "memo": "- 반죽온도 : 27도<br>"
           + "- 46g 분할 (44개 제출)<br>"
           + "- 8자형 22개(30cm->25cm로 줄여 여유있게), 트위스트형(꽈배기형) 22개(30cm)<br>"
