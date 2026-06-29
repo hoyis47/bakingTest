@@ -247,11 +247,11 @@ const bakeryListData = [
       "time": { "min": 25, "max": 30 }
     },
     "proofImage": "images/proof_모카빵.jpg",
-	/*
-	"videos": [
-        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+	"videos": [        
+		{ name: "비스킷 만들기", url: "https://youtu.be/CoIAQlUdi_M" },
+		{ name: "비스킷 가성형", url: "https://youtu.be/0CGScqq5cx4" },
+		{ name: "모카빵 2차 발효 후 상태", url: "https://youtu.be/b1spzzIUFH8" }
     ],
-	*/
     "memo": "- 반죽온도 : 27도<br>"
           + "- 250g 분할 6개 제출<br>"
 		  + "- 비스킷 100g 사용 <br>"
@@ -280,5 +280,27 @@ const bakeryListData = [
 		  + "- 충전 12개, 비충전 12개 <br>"
           + "- 비충전 : 타원형으로 밀기 -> 테두리에 식용유 바르기 -> 반으로 접기<br>"
 		  + "- 충전 : 타원형으로 밀기 -> 절반 아래에 커스터드(30g) 크림 넣기 -> 반으로 접기 -> 칼집내기"
+  },
+  {
+    "name": "옥수수식빵",
+    "mixing": "발전단계후기",
+    "firstFermentation": { "time": { "min": 50, "max": 50 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 35, "max": 38 } },	
+    "secondFermentationHeight": ["팬높이 위 0.5cm"], 
+    "bake": {
+      "topHeat": 170,
+      "bottomHeat": 180,
+      "time": { "min": 30, "max": 35 }
+    },
+    "proofImage": "images/proof_옥수수식빵.jpg",
+	/*
+	"videos": [
+        { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 180g 분할 삼봉형 4팬<br>"
+		  + "- 질은 반죽 잘 다루기"
   }
 ];
