@@ -294,11 +294,9 @@ const bakeryListData = [
       "time": { "min": 30, "max": 35 }
     },
     "proofImage": "images/proof_옥수수식빵.jpg",
-	/*
 	"videos": [
         { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
     ],
-	*/
     "memo": "- 반죽온도 : 27도<br>"
           + "- 180g 분할 삼봉형 4팬<br>"
 		  + "- 질은 반죽 잘 다루기"
