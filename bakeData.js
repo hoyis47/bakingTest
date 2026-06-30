@@ -300,5 +300,29 @@ const bakeryListData = [
     "memo": "- 반죽온도 : 27도<br>"
           + "- 180g 분할 삼봉형 4팬<br>"
 		  + "- 질은 반죽 잘 다루기"
+  },
+  {
+    "name": "소보로빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 5, "max": 5 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35 } },	     
+    "bake": {
+      "topHeat": 185,
+      "bottomHeat": 150,
+      "time": { "min": 15, "max": 17}
+    },
+    "proofImage": "images/proof_소보로빵.jpg",
+	/*
+	"videos": [
+        { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 50g 분할 24개<br>"
+		  + "- 소보로 비스킷 : 유지 크림화 -> 땅콩버터 -> 설탕, 소금 -> 계란 -> 채친 박력분(분유,베이킹파우더) -> 콩알만하게 만들기<br>"
+		  + "- 둥굴리기 -> 꼬집기 -> 물묻히기 -> 소보로 양손으로 꾹눌러 바르기<br>"
+		  + "- 소보로(30g)는 0점 저울에서 -30g씩 빼서 사용"
+		  
   }
 ];
