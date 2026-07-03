@@ -250,6 +250,7 @@ const bakeryListData = [
 	"videos": [        
 		{ name: "비스킷 만들기", url: "https://youtu.be/CoIAQlUdi_M" },
 		{ name: "비스킷 가성형", url: "https://youtu.be/0CGScqq5cx4" },
+		{ name: "모카빵 성형", url: "https://youtu.be/U-41CHQ68m4" },		
 		{ name: "모카빵 2차 발효 후 상태", url: "https://youtu.be/b1spzzIUFH8" }
     ],
     "memo": "- 반죽온도 : 27도<br>"
@@ -324,5 +325,26 @@ const bakeryListData = [
 		  + "- 둥굴리기 -> 꼬집기 -> 물묻히기 -> 소보로 양손으로 꾹눌러 바르기<br>"
 		  + "- 소보로(30g)는 0점 저울에서 -30g씩 빼서 사용"
 		  
+  },
+  {
+    "name": "버터롤",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 35 } },	     
+    "bake": {
+      "topHeat": 190,
+      "bottomHeat": 140,
+      "time": { "min": 15, "max": 17}
+    },
+    "proofImage": "images/proof_버터롤.jpg",
+	/*
+	"videos": [
+        { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 50g 분할 24개<br>"
+		  + "- 35~40cm길이로 길게 늘리기, 최대넓이는 7~8cm, 돌돌 말아 번데기 모양"		  
   }
 ];
