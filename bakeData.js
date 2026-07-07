@@ -314,11 +314,9 @@ const bakeryListData = [
       "time": { "min": 15, "max": 17}
     },
     "proofImage": "images/proof_소보로빵.jpg",
-	/*
 	"videos": [
-        { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+        { name: "소보로 만들기 2", url: "https://youtu.be/pJ5gXhh1kac" }
     ],
-	*/
     "memo": "- 반죽온도 : 27도<br>"
           + "- 50g 분할 24개<br>"
 		  + "- 소보로 비스킷 : 유지 크림화 -> 땅콩버터 -> 설탕, 소금 -> 계란 -> 채친 박력분(분유,베이킹파우더) -> 콩알만하게 만들기<br>"
@@ -338,13 +336,63 @@ const bakeryListData = [
       "time": { "min": 15, "max": 17}
     },
     "proofImage": "images/proof_버터롤.jpg",
-	/*
 	"videos": [
-        { name: "옥수수식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+		{ name: "버터롤 가성형", url: "https://youtu.be/bBOjGu6aSmw" },
+        { name: "버터롤 성형", url: "https://youtu.be/HO7cn5yrQVc" }
+		
     ],
-	*/
     "memo": "- 반죽온도 : 27도<br>"
           + "- 50g 분할 24개<br>"
 		  + "- 35~40cm길이로 길게 늘리기, 최대넓이는 7~8cm, 돌돌 말아 번데기 모양"		  
+  },
+  {
+    "name": "풀만식빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 23, "max": 40 } },
+    "secondFermentationHeight": ["팬높이 아래 1.5cm"],	 	
+    "bake": {
+      "topHeat": 190,
+      "bottomHeat": 190,
+      "time": { "min": 30, "max": 35}
+    },
+    "proofImage": "images/proof_풀만식빵.jpg",
+	/*
+	"videos": [
+		{ name: "버터롤 가성형", url: "https://youtu.be/bBOjGu6aSmw" },
+        { name: "버터롤 성형", url: "https://youtu.be/HO7cn5yrQVc" }
+		
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 250g 분할 10개<br>"
+		  + "- 삼봉형 형식으로 반죽2개가 1개 식빵<br>"
+		  + "- 모서리 각이 너무 심하면 2차발효 과다, 각이 너무없으면 2차발효 부족, 적절한 발효점 찾기 "			  
+  },
+  {
+    "name": "소시지빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 30 } },	     
+    "bake": {
+      "topHeat": 220,
+      "bottomHeat": 160,
+      "time": { "min": 15, "max": 17}
+    },
+    "proofImage": "images/proof_소시지빵.jpg",
+	/*
+	"videos": [
+		{ name: "버터롤 가성형", url: "https://youtu.be/bBOjGu6aSmw" },
+        { name: "버터롤 성형", url: "https://youtu.be/HO7cn5yrQVc" }
+		
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 70g분할 12개(6개씩 2팬)<br>"
+		  + "- 낙엽:가위를 45도, 0.5cm간격으로 9-10개 잎<br>"
+		  + "- 꽃잎:가위 90도, 7번 자르기, 반죽 잘라도 됨.<br>"	
+		  + "- 2차 발효 후 토핑(양파+마요네즈, 치즈), 케찹짜기"
   }
 ];
