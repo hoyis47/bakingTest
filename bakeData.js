@@ -313,7 +313,8 @@ const bakeryListData = [
     },
     "proofImage": "images/proof_소보로빵.jpg",
 	"videos": [
-        { name: "소보로 만들기 2", url: "https://youtu.be/pJ5gXhh1kac" }
+        { name: "소보로 만들기 2", url: "https://youtu.be/pJ5gXhh1kac" },
+		{ name: "소보로빵 성형 ", url: "https://youtu.be/92dTxGMjjZM" }
     ],
     "memo": "- 반죽온도 : 27도<br>"
           + "- 50g 분할 24개<br>"
