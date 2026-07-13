@@ -357,13 +357,9 @@ const bakeryListData = [
       "time": { "min": 30, "max": 35}
     },
     "proofImage": "images/proof_풀만식빵.jpg",
-	/*
 	"videos": [
-		{ name: "버터롤 가성형", url: "https://youtu.be/bBOjGu6aSmw" },
-        { name: "버터롤 성형", url: "https://youtu.be/HO7cn5yrQVc" }
-		
-    ],
-	*/
+        { name: "삼봉형 식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+	],
     "memo": "- 반죽온도 : 27도<br>"
           + "- 250g 분할 10개<br>"
 		  + "- 삼봉형 형식으로 반죽2개가 1개 식빵<br>"
