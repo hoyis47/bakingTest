@@ -271,11 +271,9 @@ const bakeryListData = [
       "time": { "min": 15, "max": 17 }
     },
     "proofImage": "images/proof_크림빵.jpg",
-	/*
 	"videos": [
-        { name: "쌀식빵 성형", url: "https://youtu.be/5GtmM2kif0M" }
+        { name: "크림빵 성형", url: "https://youtu.be/TPxKJpM9kdY" }
     ],
-	*/
     "memo": "- 반죽온도 : 27도<br>"
           + "- 45g(46g) 분할 24개 제출<br>"
 		  + "- 충전 12개, 비충전 12개 <br>"
@@ -394,5 +392,31 @@ const bakeryListData = [
 		  + "- 낙엽:가위를 45도, 0.5cm간격으로 9-10개 잎<br>"
 		  + "- 꽃잎:가위 90도, 7번 자르기, 반죽 잘라도 됨.<br>"	
 		  + "- 2차 발효 후 토핑(양파+마요네즈, 치즈), 케찹짜기"
+  },
+  {
+    "name": "밤식빵",
+    "mixing": "최종단계",
+    "firstFermentation": { "time": { "min": 45, "max": 45 } },
+    "intermediateProof": { "time": { "min": 10, "max": 10 } },
+    "secondFermentation": { "time": { "min": 30, "max": 30 } },	 
+	"secondFermentationHeight": ["팬높이 아래 1.5cm"],	 	    
+    "bake": {
+      "topHeat": 170,
+      "bottomHeat": 170,
+      "time": { "min": 30, "max": 35}
+    },
+    "proofImage": "images/proof_밤식빵.jpg",
+	/*
+	"videos": [
+		{ name: "버터롤 가성형", url: "https://youtu.be/bBOjGu6aSmw" },
+        { name: "버터롤 성형", url: "https://youtu.be/HO7cn5yrQVc" }
+		
+    ],
+	*/
+    "memo": "- 반죽온도 : 27도<br>"
+          + "- 450g분할 5개(산형)<br>"
+		  + "- 밤 80g씩 사용<br>"
+		  + "- 토핑물 만들어 세줄 짜기(1mm 띄우고)<br>"	
+		  + "- 아몬드 슬라이스 뿌리기"
   }
 ];
